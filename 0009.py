@@ -40,4 +40,6 @@ if __name__ == '__main__':
         if file_name.endswith(html_format):
             parser.feed(open(path + os.sep + file_name, encoding='utf-8').read())
 
+    parser.close()
+    
     print(link)
