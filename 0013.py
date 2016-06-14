@@ -24,7 +24,7 @@ class MyHTMLParser(HTMLParser):
         if tag == 'img':
             attrs = dict(attrs)
             if attrs['class'] == 'BDE_Image':
-                img_urls.append(attrs['src'])
+                img_srcs.append(attrs['src'])
 
 def get_img(url):
     img_srcs = []
