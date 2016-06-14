@@ -6,6 +6,7 @@
 from urllib.error import URLError, HTTPError
 from html.parser import HTMLParser
 import urllib.request
+import os
 
 class MyHTMLParser(HTMLParser):
     def handle_starttag(self, tag, attrs):
@@ -25,10 +26,8 @@ class MyHTMLParser(HTMLParser):
             if attrs['class'] == 'BDE_Image':
                 img_urls.append(attrs['src'])
 
-if __name__ == '__main__':
-    url = 'http://tieba.baidu.com/p/2166231880'
-    img_urls = []
-    tag_stack = []
+def get_img(url):
+    img_srcs = []
 
     try:
         response=urllib.request.urlopen(url)
@@ -36,11 +35,37 @@ if __name__ == '__main__':
         print('Error code:',e.code)
     except URLError as e:
         print('Reason',e.reason)
+    else:
+        pass
 
     parser = MyHTMLParser()
-
     parser.feed(response.read())
-
-    print(img_urls)
-
     parser.close()
+
+    return img_srcs
+
+def get_path(*directorys, root = os.curdir):
+    root += os.sep + os.sep.join(directorys)
+    return root
+
+if __name__ == '__main__':
+    url = 'http://tieba.baidu.com/p/2166231880'
+    tag_stack = []
+
+    imgs = get_img(url)
+    dir_path = get_path('image')
+
+    for src in imgs:
+        if not os.path.exists(dir_path):
+            os.makedirs(dir_path)
+        img_path = dir_path + os.sep + src.split('/')[-1]
+
+        try:
+            conn=urllib.request.urlopen(src)
+        except HTTPError as e:
+            print('Error code:',e.code)
+        except URLError as e:
+            print('Reason',e.reason)
+
+        with open(img_path, 'wb') as f:
+            f.write(conn.read())
