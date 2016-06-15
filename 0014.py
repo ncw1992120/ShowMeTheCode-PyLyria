@@ -7,7 +7,7 @@ import re
 import xlwt
 
 if __name__ == '__main__':
-    datapat = re.compile(r'\s*"(\d+)":\["([A-Za-z\u4e00-\u9fa5]+)",(\d+),(\d+),(\d+)\]')
+    datapat = re.compile(r'\s*"(\d+)"\s*:\s*\["([A-Za-z\u4e00-\u9fa5]+)",(\d+),(\d+),(\d+)\]')
 
     wb = xlwt.Workbook()
     ws = wb.add_sheet('student', cell_overwrite_ok=True)
