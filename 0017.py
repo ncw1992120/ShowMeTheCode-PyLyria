@@ -11,7 +11,10 @@ def load_excel(file_name, sheet_name):
     student = excel.sheet_by_name(sheet_name)
     data = {}
     for row in range(student.nrows):
-        data[student.row_values(row)[0]] = student.row_values(row)[1:]
+        if student.ncols > 2:
+            data[student.row_values(row)[0]] = student.row_values(row)[1:]
+        else:
+            data[student.row_values(row)[0]] = student.row_values(row)[1]
     return data
 
 def create_xml(file_name, ele, sub_ele, cmt, info):
