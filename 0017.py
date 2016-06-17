@@ -4,7 +4,7 @@
 #  Copyright 2016 PyLyria nichengwei120@163.com
 # CreateTime: 2016-06-16 17:35:32
 from lxml import etree
-import xlrd, codecs, pickle, os
+import xlrd, os
 
 def load_excel(file_name, sheet_name):
     excel = xlrd.open_workbook(file_name)
